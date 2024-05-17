@@ -1,4 +1,4 @@
-import { socket } from "../components/socket";
+import { socket } from "../utils/socket";
 
 export const useConnected = defineStore("connectedStore", {
   state: () => ({

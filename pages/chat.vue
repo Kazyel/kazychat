@@ -9,13 +9,9 @@ useHead({
         <section class="h-[768px] w-[768px] flex flex-col border-black border-2 rounded p-6">
             <Connection></Connection>
             <div class="flex justify-center flex-1 flex-col items-center">
-                <h1 class="text-center text-[3.75rem] font-extralight">Welcome to <br /> <span
-                        class="font-bold">KazyChat</span>
-                </h1>
-                <NuxtLink href="/chat"
+                <NuxtLink href="/"
                     class="mt-8 border-black border-2 rounded px-3 py-2 font-semibold hover:bg-black hover:text-white transition-all duration-200">
-                    Start
-                    chatting
+                    Home
                 </NuxtLink>
             </div>
         </section>
