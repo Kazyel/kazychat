@@ -9,11 +9,17 @@ const counter = useCounter()
 
 <template>
     <div class="p-4 flex flex-col">
+        <Connection></Connection>
+
         <h1 class="text-4xl font-bold">Home</h1>
         <NuxtLink to="/about">About</NuxtLink>
         <div>
-            <button class='px-3 border rounded mt-4 border-black' @click="counter.count">+</button>
-            <button class='px-3 border rounded mt-4 ml-4 border-black' @click="counter.decount">-</button>
+            <button
+                class='px-3 border rounded mt-4 border-black hover:bg-black hover:text-white transition-all duration-200'
+                @click="counter.count">+</button>
+            <button
+                class='px-3 border rounded mt-4 ml-4 border-black hover:bg-black hover:text-white transition-all duration-200'
+                @click="counter.decount">-</button>
         </div>
         <p>{{ counter.counter }}</p>
     </div>

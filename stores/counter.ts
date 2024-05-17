@@ -1,4 +1,4 @@
-export const useCounter = defineStore("websiteStore", {
+export const useCounter = defineStore("counterStore", {
   state: () => ({
     counter: 0,
   }),

@@ -8,6 +8,8 @@ const counter = useCounter()
 
 <template>
     <div class="p-4">
+        <Connection></Connection>
+
         <h1 class="text-4xl font-bold">About</h1>
         <NuxtLink to="/">Home</NuxtLink>
         <p>{{ counter.counter }}</p>
