@@ -6,6 +6,14 @@ await callOnce(connectedUsers.fetch)
 
 <template>
     <div class="flex">
-        <p class="font-semibold text-base text-black/45 mb-2">Online: {{ connectedUsers.connectedUsers }}</p>
+        <span>
+            <slot></slot>
+        </span>
     </div>
 </template>
+
+<style lang="postcss" scoped>
+span {
+    @apply text-black/40 font-semibold text-sm
+}
+</style>

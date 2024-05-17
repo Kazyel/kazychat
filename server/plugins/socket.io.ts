@@ -18,9 +18,10 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
     });
 
     connectedUsers++;
+    console.log(connectedUsers);
+
     io.emit("connectedUsers", connectedUsers);
   });
-
   nitroApp.router.use(
     "/socket.io/",
     defineEventHandler({
