@@ -18,7 +18,6 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
     });
 
     connectedUsers++;
-    console.log(connectedUsers);
 
     io.emit("connectedUsers", connectedUsers);
   });

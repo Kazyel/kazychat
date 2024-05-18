@@ -22,3 +22,9 @@ logs
 .env
 .env.*
 !.env.example
+
+# Drizzle
+drizzle
+sqlite.db
+sqlite.db-journal
+./migrations

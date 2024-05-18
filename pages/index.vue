@@ -7,7 +7,7 @@ const connectedUsers = useConnected()
 </script>
 
 <template>
-    <main class="flex flex-col bg-orange-200/40 justify-center min-h-screen w-screen items-center">
+    <main class="flex flex-col bg-orange-200/35 justify-center min-h-screen w-screen items-center">
         <section class="h-[768px] w-[768px] flex flex-col border-black border-2 rounded p-6">
             <div class="flex justify-center flex-1 flex-col items-center">
                 <Connection>There
