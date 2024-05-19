@@ -3,27 +3,26 @@ useHead({
     title: 'KazyChat | Chatting',
 })
 
-const connectedUsers = useConnected()
 let messageText = ref("")
 let messages = ref();
+const connectedUsers = useConnected()
 
-onMounted(() => {
-    socket.emit("getMessage")
-    socket.on("returnMessage", (message) => {
+function getMessages() {
+    socket.emit("getMessages")
+    socket.on("returnMessages", (message) => {
         messages.value = message
     })
-})
-
-async function sendMessage() {
-    socket.emit("chatMessage", messageText.value)
-    messageText.value = ''
-    socket.emit("getMessage")
 }
 
-socket.on("returnMessage", (message) => {
-    messages.value = message
-})
+async function sendMessage() {
+    socket.emit("sendMessage", messageText.value)
+    messageText.value = ''
+    getMessages()
+}
 
+onMounted(() => {
+    getMessages()
+})
 </script>
 
 <template>

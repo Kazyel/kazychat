@@ -14,15 +14,15 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
   io.bind(engine);
 
   io.on("connection", (socket) => {
-    socket.on("chatMessage", async (messageText) => {
+    socket.on("sendMessage", async (messageText) => {
       if (messageText) {
         await db.insert(messages).values({ text: messageText, userId: 1 });
       }
     });
 
-    socket.on("getMessage", async () => {
+    socket.on("getMessages", async () => {
       const message = await db.query.messages.findMany();
-      io.emit("returnMessage", message);
+      io.emit("returnMessages", message);
     });
 
     connectedUsers++;
