@@ -1,18 +1,15 @@
-import { eq } from "drizzle-orm";
 import { db } from "../database/db";
-import { messages, users } from "../database/schema";
+import { messages } from "../database/schema";
 
 export type MessageType = {
   username: string;
-  message: {
-    _value: string;
-  };
+  message: string;
 };
 
 export default defineEventHandler(async (event) => {
   try {
     const body: MessageType = await readBody(event);
-    if (!(body.message._value !== null)) {
+    if (!(body.message !== null)) {
       throw createError({
         statusCode: 400,
         statusMessage: "Message must not be null.",
@@ -24,10 +21,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const teste = await db
-      .insert(messages)
-      .values({ text: body.message._value, userId: 1 });
-    console.log(teste);
+    await db.insert(messages).values({ text: body.message, userId: 1 });
   } catch (e: any) {
     throw createError({
       statusCode: 400,

@@ -27,4 +27,4 @@ logs
 drizzle
 sqlite.db
 sqlite.db-journal
-./migrations
+migrations

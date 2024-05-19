@@ -2,6 +2,8 @@ import type { NitroApp } from "nitropack";
 import { Server as Engine } from "engine.io";
 import { Server } from "socket.io";
 import { defineEventHandler } from "h3";
+import { db } from "../database/db";
+import { messages } from "../database/schema";
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   const engine = new Engine();
@@ -12,14 +14,24 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
   io.bind(engine);
 
   io.on("connection", (socket) => {
+    socket.on("chatMessage", async (messageText) => {
+      if (messageText) {
+        await db.insert(messages).values({ text: messageText, userId: 1 });
+      }
+    });
+
+    socket.on("getMessage", async () => {
+      const message = await db.query.messages.findMany();
+      io.emit("returnMessage", message);
+    });
+
+    connectedUsers++;
+    io.emit("connectedUsers", connectedUsers);
+
     socket.on("disconnect", () => {
       connectedUsers--;
       io.emit("connectedUsers", connectedUsers);
     });
-
-    connectedUsers++;
-
-    io.emit("connectedUsers", connectedUsers);
   });
   nitroApp.router.use(
     "/socket.io/",
@@ -33,13 +45,11 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
           const nodeContext = peer.ctx.node;
           const req = nodeContext.req;
 
-          // @ts-expect-error private method
           engine.prepare(req);
 
           const rawSocket = nodeContext.req.socket;
           const websocket = nodeContext.ws;
 
-          // @ts-expect-error private method
           engine.onWebSocket(req, rawSocket, websocket);
         },
       },

@@ -4,20 +4,26 @@ useHead({
 })
 
 const connectedUsers = useConnected()
-
 let messageText = ref("")
+let messages = ref();
+
+onMounted(() => {
+    socket.emit("getMessage")
+    socket.on("returnMessage", (message) => {
+        messages.value = message
+    })
+})
 
 async function sendMessage() {
-    const message = await $fetch('/api/messages', {
-        method: "POST",
-        body: {
-            username: "teste",
-            message: messageText
-        }
-    })
-
+    socket.emit("chatMessage", messageText.value)
     messageText.value = ''
+    socket.emit("getMessage")
 }
+
+socket.on("returnMessage", (message) => {
+    messages.value = message
+})
+
 </script>
 
 <template>
@@ -31,13 +37,17 @@ async function sendMessage() {
                 <Connection>{{ connectedUsers.connectedUsers }} online</Connection>
             </div>
 
-            <div class="flex justify-end flex-1 flex-col ">
-                <!-- <UserMessage>
-                    <template v-model="username" #user-name>Mateus</template>
-<template #user-message>Messagem de teste!</template>
-</UserMessage> -->
+            <div class="flex justify-end flex-1 overflow-hidden flex-col">
+                <ul class="overflow-scroll">
+                    <div v-for="message in messages">
+                        <UserMessage>
+                            <template #user-name>{{ message?.userId }}</template>
+                            <template #user-message>{{ message?.text }}</template>
+                        </UserMessage>
+                    </div>
+                </ul>
                 <div class="typebox w-full flex relative mt-6">
-                    <input v-model="messageText"
+                    <input v-model="messageText" v-on:keyup.enter="sendMessage"
                         class="w-full message-input border-2 border-black bg-transparent rounded p-2 placeholder:text-black/40"
                         placeholder="Start typing..." />
                     <button class="absolute top-1/4 right-3" @click="sendMessage">
