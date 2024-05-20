@@ -22,7 +22,10 @@
   },
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@types/better-sqlite3": "^7.6.10",
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/nuxt": "^10.9.0",
     "drizzle-kit": "^0.21.2"
   }
 }
